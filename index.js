@@ -78,7 +78,8 @@ $(".col").click(function() {
       secondNumber=parseFloat(secondNumber.join(''));
 
       finalResult=result(operator,firstNumber,secondNumber);
-
+      
+      numbersEntered=finalResult.toString().split('');
       $(".lower-screen").empty();
       $(".upper-screen").empty();
       document.querySelector(".lower-screen").textContent=finalResult;
@@ -96,9 +97,8 @@ $(".col").click(function() {
       break;
 
     case 'DEL':
-      numbersEntered[(numbersEntered.length) - 1] = "";
-      numbersEntered = (numbersEntered.join('')).trim();
-      document.querySelector(".lower-screen").textContent = parseFloat(numbersEntered);
+      numbersEntered=numbersEntered.slice(0,-1);
+      document.querySelector(".lower-screen").textContent = parseFloat(numbersEntered.join(''));
 
       break;
     default:
