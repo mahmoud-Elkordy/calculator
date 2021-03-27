@@ -23,85 +23,98 @@ $(".col").click(function() {
   var buttonPressed = this.textContent;
   var upperDataShown = document.querySelector(".lower-screen").textContent;
 
-  //write the button clicked on the screen
-  document.querySelector(".lower-screen").textContent += buttonPressed;
+  if ((buttonPressed === '+') && (numbersEntered.length === 0)) {
+    //do nothing
+  } else if ((buttonPressed === '-') && (numbersEntered.length === 0)) {
+    //do nothing
+  } else if ((buttonPressed === '×') && (numbersEntered.length === 0)) {
+    //do nothing
+  } else if ((buttonPressed === '÷') && (numbersEntered.length === 0)) {
+    //do nothing
+  } else if((buttonPressed === 'DEL') && (numbersEntered.length === 0)) {
 
-  switch (this.textContent) {
-    case '0':
-    case '1':
-    case '2':
-    case '3':
-    case '4':
-    case '5':
-    case '6':
-    case '7':
-    case '8':
-    case '9':
-      numbersEntered.push(buttonPressed);
-      break;
+  } else {
+    //write the button clicked on the screen
+    document.querySelector(".lower-screen").textContent += buttonPressed;
 
-    case '+':
-      numbersEntered.push(buttonPressed);
-      document.querySelector(".upper-screen").textContent = document.querySelector(".lower-screen").textContent;
-      $(".lower-screen").empty();
-      operator='ADD';
-      firstNumber=numbersEntered.slice(0,(numbersEntered.length)-1);
-      break;
 
-    case '-':
-      numbersEntered.push(buttonPressed);
-      document.querySelector(".upper-screen").textContent = document.querySelector(".lower-screen").textContent;
-      $(".lower-screen").empty();
-      operator='SUBTRACT';
-      firstNumber=numbersEntered.slice(0,(numbersEntered.length)-1);
-      break;
+    switch (this.textContent) {
+      case '0':
+      case '1':
+      case '2':
+      case '3':
+      case '4':
+      case '5':
+      case '6':
+      case '7':
+      case '8':
+      case '9':
+        numbersEntered.push(buttonPressed);
+        break;
 
-    case '×':
-      numbersEntered.push(buttonPressed);
-      document.querySelector(".upper-screen").textContent = document.querySelector(".lower-screen").textContent;
-      $(".lower-screen").empty();
-      operator='MULTIPLY';
-      firstNumber=numbersEntered.slice(0,(numbersEntered.length)-1);
-      break;
+      case '+':
+        numbersEntered.push(buttonPressed);
+        document.querySelector(".upper-screen").textContent = document.querySelector(".lower-screen").textContent;
+        $(".lower-screen").empty();
+        operator = 'ADD';
+        firstNumber = numbersEntered.slice(0, (numbersEntered.length) - 1);
+        break;
 
-    case '÷':
-      numbersEntered.push(buttonPressed);
-      document.querySelector(".upper-screen").textContent = document.querySelector(".lower-screen").textContent;
-      $(".lower-screen").empty();
-      operator='DIVIDE';
-      firstNumber=numbersEntered.slice(0,(numbersEntered.length)-1);
-      break;
+      case '-':
+        numbersEntered.push(buttonPressed);
+        document.querySelector(".upper-screen").textContent = document.querySelector(".lower-screen").textContent;
+        $(".lower-screen").empty();
+        operator = 'SUBTRACT';
+        firstNumber = numbersEntered.slice(0, (numbersEntered.length) - 1);
+        break;
 
-    case '=':
-      secondNumber=numbersEntered.slice((firstNumber.length+1),(numbersEntered.length));
-      firstNumber=parseFloat(firstNumber.join(''));
-      secondNumber=parseFloat(secondNumber.join(''));
+      case '×':
+        numbersEntered.push(buttonPressed);
+        document.querySelector(".upper-screen").textContent = document.querySelector(".lower-screen").textContent;
+        $(".lower-screen").empty();
+        operator = 'MULTIPLY';
+        firstNumber = numbersEntered.slice(0, (numbersEntered.length) - 1);
+        break;
 
-      finalResult=result(operator,firstNumber,secondNumber);
-      
-      numbersEntered=finalResult.toString().split('');
-      $(".lower-screen").empty();
-      $(".upper-screen").empty();
-      document.querySelector(".lower-screen").textContent=finalResult;
-      break;
+      case '÷':
+        numbersEntered.push(buttonPressed);
+        document.querySelector(".upper-screen").textContent = document.querySelector(".lower-screen").textContent;
+        $(".lower-screen").empty();
+        operator = 'DIVIDE';
+        firstNumber = numbersEntered.slice(0, (numbersEntered.length) - 1);
+        break;
 
-    case '.':
-      numbersEntered.push(buttonPressed);
-      break;
+      case '=':
+        secondNumber = numbersEntered.slice((firstNumber.length + 1), (numbersEntered.length));
+        firstNumber = parseFloat(firstNumber.join(''));
+        secondNumber = parseFloat(secondNumber.join(''));
 
-    case 'AC':
+        finalResult = result(operator, firstNumber, secondNumber);
 
-      $(".lower-screen").empty();
-      $(".upper-screen").empty();
-      numbersEntered = [];
-      break;
+        numbersEntered = finalResult.toString().split('');
+        $(".lower-screen").empty();
+        $(".upper-screen").empty();
+        document.querySelector(".lower-screen").textContent = finalResult;
+        break;
 
-    case 'DEL':
-      numbersEntered=numbersEntered.slice(0,-1);
-      document.querySelector(".lower-screen").textContent = parseFloat(numbersEntered.join(''));
+      case '.':
+        numbersEntered.push(buttonPressed);
+        break;
 
-      break;
-    default:
+      case 'AC':
+
+        $(".lower-screen").empty();
+        $(".upper-screen").empty();
+        numbersEntered = [];
+        break;
+
+      case 'DEL':
+        numbersEntered = numbersEntered.slice(0, -1);
+        document.querySelector(".lower-screen").textContent = parseFloat(numbersEntered.join(''));
+
+        break;
+      default:
+    }
   }
 });
 
@@ -112,7 +125,7 @@ $(".col").click(function() {
 
 
 
-function result(operation,num1,num2){
+function result(operation, num1, num2) {
   switch (operation) {
     case 'ADD':
       return num1 + num2;
@@ -130,6 +143,7 @@ function result(operation,num1,num2){
       return num1 / num2;
       break;
 
-    default:alert("error");
+    default:
+      alert("error");
   }
 }
