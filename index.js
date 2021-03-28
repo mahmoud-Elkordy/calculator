@@ -4,6 +4,10 @@ var firstNumber;
 var secondNumber;
 var finalResult;
 
+firstNumber = numbersEntered.slice(0, (numbersEntered.length) - 1);
+
+
+
 // button animation (used as hover in css)
 // $(".col").mouseover(function() { // mouseover = mouseenter
 //   $(this).css("background-color", "#fff");
@@ -23,6 +27,7 @@ $(".col").click(function() {
   var buttonPressed = this.textContent;
   var upperDataShown = document.querySelector(".lower-screen").textContent;
 
+
   if ((buttonPressed === '+') && (numbersEntered.length === 0)) {
     //do nothing
   } else if ((buttonPressed === '-') && (numbersEntered.length === 0)) {
@@ -31,12 +36,13 @@ $(".col").click(function() {
     //do nothing
   } else if ((buttonPressed === '÷') && (numbersEntered.length === 0)) {
     //do nothing
-  } else if((buttonPressed === 'DEL') && (numbersEntered.length === 0)) {
-
+  } else if ((buttonPressed === 'DEL') && (numbersEntered.length === 0)) {
+    //do nothing
+  } else if ((buttonPressed === '.') && (numbersEntered.length === 0)) {
+    //do nothing
+  } else if ((buttonPressed === '=') && (numbersEntered.length === 0)) {
+    //do nothing
   } else {
-    //write the button clicked on the screen
-    document.querySelector(".lower-screen").textContent += buttonPressed;
-
 
     switch (this.textContent) {
       case '0':
@@ -49,39 +55,80 @@ $(".col").click(function() {
       case '7':
       case '8':
       case '9':
+        document.querySelector(".lower-screen").textContent += buttonPressed;
         numbersEntered.push(buttonPressed);
+        console.log(numbersEntered);
         break;
 
       case '+':
-        numbersEntered.push(buttonPressed);
-        document.querySelector(".upper-screen").textContent = document.querySelector(".lower-screen").textContent;
-        $(".lower-screen").empty();
-        operator = 'ADD';
-        firstNumber = numbersEntered.slice(0, (numbersEntered.length) - 1);
+        if (numbersEntered[numbersEntered.length - 1] === '+') {
+          //do nothing
+        } else if ((numbersEntered[numbersEntered.length - 1]) === '-') {
+
+        } else {
+          if (document.querySelector(".upper-screen").textContent === "") {
+            document.querySelector(".lower-screen").textContent += buttonPressed;
+            numbersEntered.push(buttonPressed);
+            document.querySelector(".upper-screen").textContent = document.querySelector(".lower-screen").textContent;
+            $(".lower-screen").empty();
+            operator = 'ADD';
+            firstNumber = numbersEntered.slice(0, (numbersEntered.length) - 1);
+          } else {
+            // case '=':
+            secondNumber = numbersEntered.slice((firstNumber.length + 1), (numbersEntered.length));
+            firstNumber = parseFloat(firstNumber.join(''));
+            secondNumber = parseFloat(secondNumber.join(''));
+
+            finalResult = result(operator, firstNumber, secondNumber) + "+";
+            numbersEntered = finalResult.toString().split('');
+            firstNumber = firstNumber.toString().split('');
+            secondNumber = secondNumber.toString().split('');
+
+            $(".lower-screen").empty();
+            $(".upper-screen").empty();
+            document.querySelector(".upper-screen").textContent = finalResult;
+            break;
+          }
+        }
         break;
 
       case '-':
-        numbersEntered.push(buttonPressed);
-        document.querySelector(".upper-screen").textContent = document.querySelector(".lower-screen").textContent;
-        $(".lower-screen").empty();
-        operator = 'SUBTRACT';
-        firstNumber = numbersEntered.slice(0, (numbersEntered.length) - 1);
+        if (numbersEntered[numbersEntered.length - 1] === '-') {
+          //do nothing
+        } else {
+          document.querySelector(".lower-screen").textContent += buttonPressed;
+          numbersEntered.push(buttonPressed);
+          document.querySelector(".upper-screen").textContent = document.querySelector(".lower-screen").textContent;
+          $(".lower-screen").empty();
+          operator = 'SUBTRACT';
+          firstNumber = numbersEntered.slice(0, (numbersEntered.length) - 1);
+        }
         break;
 
       case '×':
-        numbersEntered.push(buttonPressed);
-        document.querySelector(".upper-screen").textContent = document.querySelector(".lower-screen").textContent;
-        $(".lower-screen").empty();
-        operator = 'MULTIPLY';
-        firstNumber = numbersEntered.slice(0, (numbersEntered.length) - 1);
+        if (numbersEntered[numbersEntered.length - 1] === '×') {
+          //do nothing
+        } else {
+          document.querySelector(".lower-screen").textContent += buttonPressed;
+          numbersEntered.push(buttonPressed);
+          document.querySelector(".upper-screen").textContent = document.querySelector(".lower-screen").textContent;
+          $(".lower-screen").empty();
+          operator = 'MULTIPLY';
+          firstNumber = numbersEntered.slice(0, (numbersEntered.length) - 1);
+        }
         break;
 
       case '÷':
-        numbersEntered.push(buttonPressed);
-        document.querySelector(".upper-screen").textContent = document.querySelector(".lower-screen").textContent;
-        $(".lower-screen").empty();
-        operator = 'DIVIDE';
-        firstNumber = numbersEntered.slice(0, (numbersEntered.length) - 1);
+        if (numbersEntered[numbersEntered.length - 1] === '÷') {
+          //do nothing
+        } else {
+          document.querySelector(".lower-screen").textContent += buttonPressed;
+          numbersEntered.push(buttonPressed);
+          document.querySelector(".upper-screen").textContent = document.querySelector(".lower-screen").textContent;
+          $(".lower-screen").empty();
+          operator = 'DIVIDE';
+          firstNumber = numbersEntered.slice(0, (numbersEntered.length) - 1);
+        }
         break;
 
       case '=':
@@ -98,22 +145,42 @@ $(".col").click(function() {
         break;
 
       case '.':
+        document.querySelector(".lower-screen").textContent += buttonPressed;
         numbersEntered.push(buttonPressed);
         break;
 
       case 'AC':
-
         $(".lower-screen").empty();
         $(".upper-screen").empty();
         numbersEntered = [];
         break;
 
       case 'DEL':
-        numbersEntered = numbersEntered.slice(0, -1);
-        document.querySelector(".lower-screen").textContent = parseFloat(numbersEntered.join(''));
+        secondNumber = numbersEntered.slice((firstNumber.length + 1), (numbersEntered.length));
 
+        if (document.querySelector(".lower-screen").textContent === "" && document.querySelector(".upper-screen").textContent !== "") {
+          //do nothing
+        } else if (document.querySelector(".lower-screen").textContent !== "" && document.querySelector(".upper-screen").textContent !== "") {
+          if (secondNumber.length === 1) {
+            $(".lower-screen").empty();
+            numbersEntered = numbersEntered.slice(0, -1);
+          } else {
+            secondNumber = secondNumber.slice(0, -1);
+            document.querySelector(".lower-screen").textContent = parseFloat(secondNumber.join(''));
+            numbersEntered.pop();
+          }
+        } else {
+          if (numbersEntered.length === 1) {
+            $(".lower-screen").empty();
+            numbersEntered = numbersEntered.slice(0, -1);
+          } else {
+            numbersEntered = numbersEntered.slice(0, -1);
+            document.querySelector(".lower-screen").textContent = parseFloat(numbersEntered.join(''));
+          }
+        }
         break;
       default:
+        alert("error");
     }
   }
 });
