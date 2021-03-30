@@ -29,18 +29,20 @@ body{
 .upper-screen,.lower-screen{
   background-color: #276678;
   border-width: 0;
+  text-align: right;
+}
 
+.upper-screen{
+  height: 1.7rem;
+  font-size: 1.5rem;
+  color: #3c415c;
+}
+
+.lower-screen{
+  height: 4.55rem;
+  font-size: 3rem;
 }
 
 .screen-row{
   height: 6.25rem;
-}
-
-.ac{
-}
-
-.del{
-}
-
-.divide{
 }
