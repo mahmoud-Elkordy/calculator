@@ -39,7 +39,6 @@ $(".col").click(function() {
       case '9':
         document.querySelector(".lower-screen").textContent += buttonPressed;
         numbersEntered.push(buttonPressed);
-        console.log(numbersEntered);
         break;
 
       case '+':
@@ -65,132 +64,128 @@ $(".col").click(function() {
             secondNumber = parseFloat(secondNumber.join(''));
             operator = 'ADD';
 
-            secondNumber = result(operator, firstNumber, secondNumber) + "+";
+            secondNumber = result(operator, firstNumber, secondNumber);
 
             $(".lower-screen").empty();
             $(".upper-screen").empty();
-            document.querySelector(".upper-screen").textContent = secondNumber;
+            document.querySelector(".upper-screen").textContent = secondNumber + '+';
 
-            numbersEntered = secondNumber.toString().split('');
-            firstNumber = firstNumber.toString().split('');
-            secondNumber = secondNumber.toString().split('');
+            numbersEntered = (secondNumber + '+').toString().split('');
+            firstNumber = numbersEntered.slice(0, (numbersEntered.length) - 1);
             break;
           }
         }
         break;
 
       case '-':
-        if (numbersEntered[numbersEntered.length - 1] === '-') {
-          //do nothing
-        } else if ((numbersEntered[numbersEntered.length - 1] === '+')||(numbersEntered[numbersEntered.length - 1] === '×')||(numbersEntered[numbersEntered.length - 1] === '÷')) {
-            numbersEntered.pop();
-            numbersEntered.push(buttonPressed);
-            operator='SUBTRACT';
-            document.querySelector(".upper-screen").textContent=(numbersEntered.join(''));
+      if (numbersEntered[numbersEntered.length - 1] === '-') {
+        //do nothing
+      } else if ((numbersEntered[numbersEntered.length - 1] === '+')||(numbersEntered[numbersEntered.length - 1] === '×')||(numbersEntered[numbersEntered.length - 1] === '÷')) {
+          numbersEntered.pop();
+          numbersEntered.push(buttonPressed);
+          operator='SUBTRACT';
+          document.querySelector(".upper-screen").textContent=(numbersEntered.join(''));
+      } else {
+        if (document.querySelector(".upper-screen").textContent === "") {
+          document.querySelector(".lower-screen").textContent += buttonPressed;
+          numbersEntered.push(buttonPressed);
+          document.querySelector(".upper-screen").textContent = document.querySelector(".lower-screen").textContent;
+          $(".lower-screen").empty();
+          operator = 'SUBTRACT';
+          firstNumber = numbersEntered.slice(0, (numbersEntered.length) - 1);
         } else {
-          if (document.querySelector(".upper-screen").textContent === "") {
-            document.querySelector(".lower-screen").textContent += buttonPressed;
-            numbersEntered.push(buttonPressed);
-            document.querySelector(".upper-screen").textContent = document.querySelector(".lower-screen").textContent;
-            $(".lower-screen").empty();
-            operator = 'SUBTRACT';
-            firstNumber = numbersEntered.slice(0, (numbersEntered.length) - 1);
-          } else {
-            // case '=':
-            secondNumber = numbersEntered.slice((firstNumber.length + 1), (numbersEntered.length));
-            firstNumber = parseFloat(firstNumber.join(''));
-            secondNumber = parseFloat(secondNumber.join(''));
-            operator = 'SUBTRACT';
+          // case '=':
+          secondNumber = numbersEntered.slice((firstNumber.length + 1), (numbersEntered.length));
+          firstNumber = parseFloat(firstNumber.join(''));
+          secondNumber = parseFloat(secondNumber.join(''));
+          operator = 'SUBTRACT';
 
-            secondNumber = result(operator, firstNumber, secondNumber) + "+";
+          secondNumber = result(operator, firstNumber, secondNumber);
 
-            $(".lower-screen").empty();
-            $(".upper-screen").empty();
-            document.querySelector(".upper-screen").textContent = secondNumber;
+          $(".lower-screen").empty();
+          $(".upper-screen").empty();
+          document.querySelector(".upper-screen").textContent = secondNumber + '-';
 
-            numbersEntered = secondNumber.toString().split('');
-            firstNumber = firstNumber.toString().split('');
-            secondNumber = secondNumber.toString().split('');
-            break;
-          }
+          numbersEntered = (secondNumber + '-').toString().split('');
+          firstNumber = numbersEntered.slice(0, (numbersEntered.length) - 1);
+          break;
         }
-        break;
-
+      }
+      break;
 
       case '×':
-        if (numbersEntered[numbersEntered.length - 1] === '×') {
-          //do nothing
-        } else if ((numbersEntered[numbersEntered.length - 1] === '-')||(numbersEntered[numbersEntered.length - 1] === '+')||(numbersEntered[numbersEntered.length - 1] === '÷')) {
-            numbersEntered.pop();
-            numbersEntered.push(buttonPressed);
-            operator='MULTIPLY';
-            document.querySelector(".upper-screen").textContent=(numbersEntered.join(''));
+      if (numbersEntered[numbersEntered.length - 1] === '×') {
+        //do nothing
+      } else if ((numbersEntered[numbersEntered.length - 1] === '-')||(numbersEntered[numbersEntered.length - 1] === '+')||(numbersEntered[numbersEntered.length - 1] === '÷')) {
+          numbersEntered.pop();
+          numbersEntered.push(buttonPressed);
+          operator='MULTIPLY';
+          document.querySelector(".upper-screen").textContent=(numbersEntered.join(''));
+      } else {
+        if (document.querySelector(".upper-screen").textContent === "") {
+          document.querySelector(".lower-screen").textContent += buttonPressed;
+          numbersEntered.push(buttonPressed);
+          document.querySelector(".upper-screen").textContent = document.querySelector(".lower-screen").textContent;
+          $(".lower-screen").empty();
+          operator = 'MULTIPLY';
+          firstNumber = numbersEntered.slice(0, (numbersEntered.length) - 1);
         } else {
-          if (document.querySelector(".upper-screen").textContent === "") {
-            document.querySelector(".lower-screen").textContent += buttonPressed;
-            numbersEntered.push(buttonPressed);
-            document.querySelector(".upper-screen").textContent = document.querySelector(".lower-screen").textContent;
-            $(".lower-screen").empty();
-            operator = 'MULTIPLY';
-            firstNumber = numbersEntered.slice(0, (numbersEntered.length) - 1);
-          } else {
-            // case '=':
-            secondNumber = numbersEntered.slice((firstNumber.length + 1), (numbersEntered.length));
-            firstNumber = parseFloat(firstNumber.join(''));
-            secondNumber = parseFloat(secondNumber.join(''));
-            operator = 'MULTIPLY';
+          // case '=':
+          secondNumber = numbersEntered.slice((firstNumber.length + 1), (numbersEntered.length));
+          firstNumber = parseFloat(firstNumber.join(''));
+          secondNumber = parseFloat(secondNumber.join(''));
+          operator = 'MULTIPLY';
 
-            secondNumber = result(operator, firstNumber, secondNumber) + "+";
+          secondNumber = result(operator, firstNumber, secondNumber);
 
-            $(".lower-screen").empty();
-            $(".upper-screen").empty();
-            document.querySelector(".upper-screen").textContent = secondNumber;
+          $(".lower-screen").empty();
+          $(".upper-screen").empty();
+          document.querySelector(".upper-screen").textContent = secondNumber + '×';
 
-            numbersEntered = secondNumber.toString().split('');
-            firstNumber = firstNumber.toString().split('');
-            secondNumber = secondNumber.toString().split('');
-            break;
-          }
+          numbersEntered = (secondNumber + '×').toString().split('');
+          firstNumber = numbersEntered.slice(0, (numbersEntered.length) - 1);
+          break;
         }
-        break;
+      }
+      break;
 
 
       case '÷':
-        if (numbersEntered[numbersEntered.length - 1] === '÷') {
-          //do nothing
-        } else if ((numbersEntered[numbersEntered.length - 1] === '-')||(numbersEntered[numbersEntered.length - 1] === '×')||(numbersEntered[numbersEntered.length - 1] === '+')) {
-            numbersEntered.pop();
-            numbersEntered.push(buttonPressed);
-            operator='DIVIDE';
-            document.querySelector(".upper-screen").textContent=(numbersEntered.join(''));
+      if (numbersEntered[numbersEntered.length - 1] === '÷') {
+        //do nothing
+      } else if ((numbersEntered[numbersEntered.length - 1] === '-')||(numbersEntered[numbersEntered.length - 1] === '×')||(numbersEntered[numbersEntered.length - 1] === '+')) {
+          numbersEntered.pop();
+          numbersEntered.push(buttonPressed);
+          operator='DIVIDE';
+          document.querySelector(".upper-screen").textContent=(numbersEntered.join(''));
+      } else {
+        if (document.querySelector(".upper-screen").textContent === "") {
+          document.querySelector(".lower-screen").textContent += buttonPressed;
+          numbersEntered.push(buttonPressed);
+          document.querySelector(".upper-screen").textContent = document.querySelector(".lower-screen").textContent;
+          $(".lower-screen").empty();
+          operator = 'DIVIDE';
+          firstNumber = numbersEntered.slice(0, (numbersEntered.length) - 1);
         } else {
-          if (document.querySelector(".upper-screen").textContent === "") {
-            document.querySelector(".lower-screen").textContent += buttonPressed;
-            numbersEntered.push(buttonPressed);
-            document.querySelector(".upper-screen").textContent = document.querySelector(".lower-screen").textContent;
-            $(".lower-screen").empty();
-            operator = 'DIVIDE';
-            firstNumber = numbersEntered.slice(0, (numbersEntered.length) - 1);
-          } else {
-            // case '=':
-            secondNumber = numbersEntered.slice((firstNumber.length + 1), (numbersEntered.length));
-            firstNumber = parseFloat(firstNumber.join(''));
-            secondNumber = parseFloat(secondNumber.join(''));
-            operator = 'DIVIDE';
+          // case '=':
+          secondNumber = numbersEntered.slice((firstNumber.length + 1), (numbersEntered.length));
+          firstNumber = parseFloat(firstNumber.join(''));
+          secondNumber = parseFloat(secondNumber.join(''));
+          operator = 'DIVIDE';
 
-            secondNumber = result(operator, firstNumber, secondNumber) + "+";
+          secondNumber = result(operator, firstNumber, secondNumber);
 
-            $(".lower-screen").empty();
-            $(".upper-screen").empty();
-            document.querySelector(".upper-screen").textContent = secondNumber;
+          $(".lower-screen").empty();
+          $(".upper-screen").empty();
+          document.querySelector(".upper-screen").textContent = secondNumber + '÷';
 
-            numbersEntered = secondNumber.toString().split('');
-            firstNumber = firstNumber.toString().split('');
-            secondNumber = secondNumber.toString().split('');
-            break;
-          }
+          numbersEntered = (secondNumber + '÷').toString().split('');
+          firstNumber = numbersEntered.slice(0, (numbersEntered.length) - 1);
+          break;
         }
-        break;
+      }
+      break;
+
 
       case '=':
         secondNumber = numbersEntered.slice((firstNumber.length + 1), (numbersEntered.length));
